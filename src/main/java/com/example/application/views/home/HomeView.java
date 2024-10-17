@@ -1,23 +1,20 @@
 package com.example.application.views.home;
 
+import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.ClickEvent;
-import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import ai.peoplecode.OpenAIConversation;
-
-import java.util.ArrayList;
 
 
 @PageTitle("Home")
@@ -27,40 +24,47 @@ import java.util.ArrayList;
 public class HomeView extends Composite<VerticalLayout> {
 
     private TextField userInput;
-    private City city1;
-    private City city2;
+    private CityDiv city1;
+    private CityDiv city2;
 
-    class City {
+    public class CityDiv extends VerticalLayout {
         private String cityName;
         private String context;
         private Div responseContainer;
         private final OpenAIConversation conversation = new OpenAIConversation("demo", "gpt-4o-mini");
 
-        public City(Div responseContainer, String cityName) {
-            this.responseContainer = responseContainer;
+        public CityDiv(String cityName) {
             this.cityName = cityName;
-            this.context = "Use up to date information. You are arguing on in favor of visiting " + cityName;
+            this.context = "Use up to date information. You are the city " + cityName + ". Respond in the first person from the perspective of " + cityName + ".";
+
+            this.getStyle().set("width", "50%");
+            this.getStyle().set("height", "100%");
+            this.setAlignItems(FlexComponent.Alignment.CENTER);
+
+            String imagePath = "images/" + this.cityName + ".jpg";
+            Image image = new Image(imagePath, "");
+            image.getStyle().set("width", "50%");
+            this.add(image);
+
+            Div responseContainer = new Div();
+            responseContainer.getStyle().set("height", "80%");
+            this.add(responseContainer);
+            this.responseContainer = responseContainer;
+
+            addMessageDiv(cityName + ": Hello, I am " + cityName + ". It's nice to meet you!");
         }
 
         public void askQuestion(String question) {
+            this.addMessageDiv("You: " + question);
             String answer = this.conversation.askQuestion(this.context, question);
-            Paragraph response = new Paragraph(answer);
-            this.responseContainer.add(response);
+            this.addMessageDiv(cityName + ": " + answer);
+        }
+
+        public void addMessageDiv(String contents) {
+            Paragraph message = new Paragraph(contents);
+            this.responseContainer.add(message);
         }
     }
-
-//    class MyClickListener
-//            implements ComponentEventListener<ClickEvent<Button>> {
-//        int count = 0;
-//
-//        @Override
-//        public void onComponentEvent(ClickEvent<Button> event) {
-//            //event.getSource()
-//            //        .setText("You have clicked me " + (++count) + " times");
-//            String reply= conversation.askQuestion("You are Plato", askText.getValue());
-//            replyText.setText(reply);
-//        }
-//    }
 
     private String getUserInput() {
         String userMessage = userInput.getValue();
@@ -69,71 +73,48 @@ public class HomeView extends Composite<VerticalLayout> {
     }
 
     public HomeView() {
+        //Make vertical layout section for whole app
         VerticalLayout appContainer = new VerticalLayout();
         appContainer.getStyle().set("width", "100%");
         appContainer.getStyle().set("height", "100%");
+        appContainer.setAlignItems(FlexComponent.Alignment.CENTER);
+        getContent().add(appContainer);
 
+        //Make horizontal layout section for cities (two for now)
         HorizontalLayout citiesContainer = new HorizontalLayout();
         citiesContainer.getStyle().set("width", "100%");
         citiesContainer.getStyle().set("height", "70%");
         appContainer.add(citiesContainer);
 
-        VerticalLayout city1Container = new VerticalLayout();
-        city1Container.getStyle().set("width", "50%");
-        city1Container.getStyle().set("height", "100%");
-        citiesContainer.add(city1Container);
+        //Make cities
+        city1 = new CityDiv("Hanoi");
+        citiesContainer.add(city1);
+        city2 = new CityDiv("Madrid");
+        citiesContainer.add(city2);
 
-        String city1ImagePath = "images/Hanoi.jpg";
-        Image city1Image = new Image(city1ImagePath, "");
-        city1Image.getStyle().set("width", "50%");
-        city1Container.add(city1Image);
-
-        Div city1Response = new Div();
-        city1Response.setHeight("80%");
-        city1Container.add(city1Response);
-
-        Paragraph city1Greeting = new Paragraph("Hello, I am Madrid.");
-        city1Greeting.getStyle().set("width", "100%");
-        city1Container.add(city1Greeting);
-
-        VerticalLayout city2Container = new VerticalLayout();
-        city2Container.getStyle().set("width", "50%");
-        city2Container.getStyle().set("height", "100%");
-        citiesContainer.add(city2Container);
-
-        String city2ImagePath = "images/Madrid.jpg";
-        Image city2Image = new Image(city2ImagePath, "");
-        city2Image.getStyle().set("width", "50%");
-        city2Container.add(city2Image);
-
-        Div city2Response = new Div();
-        city2Response.getStyle().set("height", "80%");
-        city2Container.add(city2Response);
-
-        Paragraph city2Greeting = new Paragraph("Hello, I am Madrid.");
-        city2Greeting.getStyle().set("width", "100%");
-        city2Container.add(city2Greeting);
-
-
+        //Make horizontal layout for buttons
         HorizontalLayout buttonContainer = new HorizontalLayout();
-        buttonContainer.getStyle().set("width", "100%");
+        buttonContainer.getStyle().set("width", "75%");
         buttonContainer.getStyle().set("height", "10%");
+        buttonContainer.setJustifyContentMode(FlexComponent.JustifyContentMode.AROUND);
         appContainer.add(buttonContainer);
 
-        Button askCity1 = new Button("Ask city 1");
+        //Make buttons
+        Button askCity1 = new Button("Ask " + city1.cityName, event -> city1.askQuestion(getUserInput()));
         buttonContainer.add(askCity1);
-
-        Button askBothCities = new Button("Ask both cities");
-        buttonContainer.add(askBothCities);
-
-        Button askCity2 = new Button("Ask city 2");
+        Button askBoth = new Button("Ask " + city1.cityName + " and " + city2.cityName, event -> {
+            String question = getUserInput();
+            city1.askQuestion(question);
+            city2.askQuestion(question);
+        });
+        buttonContainer.add(askBoth);
+        Button askCity2 = new Button("Ask " + city2.cityName, event -> city2.askQuestion(getUserInput()));
         buttonContainer.add(askCity2);
 
+        //Make user input
         userInput = new TextField();
         userInput.getStyle().set("height", "20%");
         userInput.getStyle().set("width", "100%");
         appContainer.add(userInput);
-        getContent().add(appContainer);
-
     }
 }
