@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0f6ce937-844b-49bd-bc24-fab2689cef07" name="Changes" comment="add title and subtitle, make input container thinner">
-      <change beforePath="$PROJECT_DIR$/CityDebate/src/main/java/com/example/application/views/empty/CityDebate.java" beforeDir="false" afterPath="$PROJECT_DIR$/CityDebate/src/main/java/com/example/application/views/empty/CityDebate.java" afterDir="false" />
-    </list>
+    <list default="true" id="0f6ce937-844b-49bd-bc24-fab2689cef07" name="Changes" comment="make it so nothing happens when you input en empty string into question" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,7 +39,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/GenAIProject/CityDebate/libs/PeopleCodeOpenAI.jar"
+    "last_opened_file_path": "C:/GenAIProject"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -61,11 +59,28 @@
       <option name="project" value="LOCAL" />
       <updated>1729495217186</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="make it so nothing happens when you input en empty string into question">
+      <option name="closed" value="true" />
+      <created>1729550354580</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1729550354580</updated>
+    </task>
+    <task id="LOCAL-00003" summary="make it so nothing happens when you input en empty string into question">
+      <option name="closed" value="true" />
+      <created>1729550441171</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1729550441171</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add title and subtitle, make input container thinner" />
-    <option name="LAST_COMMIT_MESSAGE" value="add title and subtitle, make input container thinner" />
+    <MESSAGE value="make it so nothing happens when you input en empty string into question" />
+    <option name="LAST_COMMIT_MESSAGE" value="make it so nothing happens when you input en empty string into question" />
   </component>
 </project>
