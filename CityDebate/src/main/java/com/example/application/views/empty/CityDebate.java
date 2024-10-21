@@ -1,12 +1,10 @@
 package com.example.application.views.empty;
 
+
 import ai.peoplecode.OpenAIConversation;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -52,10 +50,10 @@ public class CityDebate extends Composite<VerticalLayout> {
             addMessageDiv(cityName + ": Hello, I am " + cityName + ". It's nice to meet you!");
         }
 
-        public void askQuestion(String question) {
+        public void askQuestion(String question) { // method to ask question to each city and generate the response
             this.addMessageDiv("You: " + question);
-            String answer = this.conversation.askQuestion(this.context, question);
-            this.addMessageDiv(cityName + ": " + answer);
+            String answer = this.conversation.askQuestion(this.context, question); // generates AI answer
+            this.addMessageDiv(cityName + ": " + answer); // displays AI answer
         }
 
         public void addMessageDiv(String contents) {
@@ -77,6 +75,15 @@ public class CityDebate extends Composite<VerticalLayout> {
         appContainer.getStyle().set("height", "100%");
         appContainer.setAlignItems(FlexComponent.Alignment.CENTER);
         getContent().add(appContainer);
+
+        // add a title
+        H2 title = new H2("Welcome to City Debate");
+        title.getStyle().set("margin-top", "0");
+        appContainer.add(title);
+
+        H3 subtitle = new H3("ask questions to Hanoi and Madrid!");
+        subtitle.getStyle().set("color", "gray");
+        appContainer.add(subtitle);
 
         //Make horizontal layout section for cities (two for now)
         HorizontalLayout citiesContainer = new HorizontalLayout();
@@ -112,7 +119,8 @@ public class CityDebate extends Composite<VerticalLayout> {
         //Make user input
         userInput = new TextField();
         userInput.getStyle().set("height", "20%");
-        userInput.getStyle().set("width", "100%");
+        userInput.getStyle().set("width", "80%");
+
         appContainer.add(userInput);
     }
 }
