@@ -51,9 +51,12 @@ public class CityDebate extends Composite<VerticalLayout> {
         }
 
         public void askQuestion(String question) { // method to ask question to each city and generate the response
-            this.addMessageDiv("You: " + question);
-            String answer = this.conversation.askQuestion(this.context, question); // generates AI answer
-            this.addMessageDiv(cityName + ": " + answer); // displays AI answer
+            if (!question.trim().equals("")){
+                this.addMessageDiv("You: " + question);
+                String answer = this.conversation.askQuestion(this.context, question); // generates AI answer
+                this.addMessageDiv(cityName + ": " + answer); // displays AI answer
+            }
+
         }
 
         public void addMessageDiv(String contents) {
@@ -121,6 +124,6 @@ public class CityDebate extends Composite<VerticalLayout> {
         userInput.getStyle().set("height", "20%");
         userInput.getStyle().set("width", "80%");
 
-        appContainer.add(userInput);
+        appContainer.add(userInput); // add it here
     }
 }
