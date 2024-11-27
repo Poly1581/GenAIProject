@@ -12,8 +12,8 @@ There is an option to ask a question to once city, or both cities at the same ti
                 String answer = this.conversation.askQuestion(this.context, question); // generates AI answer
                 this.addMessageDiv(cityName + ": " + answer); // displays AI answer
             }
-
-        }
+}
+     
 
 We added an if statement if (!question.trim().equals("")){ to this method so that a question and answer would only be displayed if the question was not an empty string. This helped us clean up our website during testing, so that it looked neater and provided a better user experience.
 Another feature that we could expand on in order to improve the user experience is to organize the page so that the questions start on the same spot on the screen. This would be helpful if the user were to ask many questions to each city, so that if each city generates responses of different lengths, the user would not have to keep scrolling up and down to look at each response. 
